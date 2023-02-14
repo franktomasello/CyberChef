@@ -17,6 +17,11 @@ steps:
     versionSpec: '16.x'
   displayName: 'Install Node.js'
 
+- script: |
+    npm install
+    npm run build
+  displayName: 'npm install and build'  
+
 - task: SynopsysDetectTask@8
   displayName: 'Black Duck Scan'
   inputs:
@@ -28,7 +33,4 @@ steps:
     polarisService: 'Polaris Demo Server'
     polarisCommand: 'analyze -w'
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+
