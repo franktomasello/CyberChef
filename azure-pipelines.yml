@@ -22,15 +22,17 @@ steps:
     npm run build
   displayName: 'npm install and build'  
 
+- task: SynopsysPolaris@1
+  inputs:
+    polarisService: 'Polaris Demo Server'
+    polarisCommand: 'analyze -w'
+
 - task: SynopsysDetectTask@8
   displayName: 'Black Duck Scan'
   inputs:
     BlackDuckService: 'BD'
     DetectVersion: 'latest'
 
-- task: SynopsysPolaris@1
-  inputs:
-    polarisService: 'Polaris Demo Server'
-    polarisCommand: 'analyze -w'
+
 
 
