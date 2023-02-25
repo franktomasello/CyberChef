@@ -34,6 +34,10 @@ jobs:
       BlackDuckService: 'BD'
       DetectVersion: 'latest'
 
+- job: 'BDRest'
+  pool: server
+
+  steps:  
   - task: InvokeRESTAPI@1
     inputs:
       connectionType: 'connectedServiceName'
