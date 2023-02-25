@@ -1,4 +1,12 @@
 # Node.js
+- task: InvokeRESTAPI@1
+  inputs:
+    connectionType: 'connectedServiceName'
+    serviceConnection: 'BD API'
+    method: 'GET'
+    headers: 
+    urlSuffix: 'projects/abd80c7e-d771-4627-9c04-ee346c932920/versions/392992cd-8c61-4377-a6fd-891018ff8023/risk-profile'
+    waitForCompletion: 'false'
 
 
 # Build a general Node.js project with npm.
