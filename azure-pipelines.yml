@@ -5,43 +5,46 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
+jobs:
+- job: 'scan'
+
 trigger:
-- master
+  - master
 
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '16.x'
-  displayName: 'Install Node.js'
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '16.x'
+    displayName: 'Install Node.js'
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'  
-  
-- task: SynopsysPolaris@1
-  inputs:
-    polarisService: 'Polaris Demo Server'
-    polarisCommand: 'analyze -w'
+  - script: |
+      npm install
+      npm run build
+    displayName: 'npm install and build'  
+    
+  - task: SynopsysPolaris@1
+    inputs:
+      polarisService: 'Polaris Demo Server'
+      polarisCommand: 'analyze -w'
 
 
-- task: SynopsysDetectTask@8
-  displayName: 'Black Duck Scan'
-  inputs:
-    BlackDuckService: 'BD'
-    DetectVersion: 'latest'
+  - task: SynopsysDetectTask@8
+    displayName: 'Black Duck Scan'
+    inputs:
+      BlackDuckService: 'BD'
+      DetectVersion: 'latest'
 
-- task: InvokeRESTAPI@1
-  inputs:
-    connectionType: 'connectedServiceName'
-    serviceConnection: 'BD API'
-    method: 'GET'
-    headers: 
-    urlSuffix: 'projects/abd80c7e-d771-4627-9c04-ee346c932920/versions/392992cd-8c61-4377-a6fd-891018ff8023/risk-profile'
-    waitForCompletion: 'false'
+  - task: InvokeRESTAPI@1
+    inputs:
+      connectionType: 'connectedServiceName'
+      serviceConnection: 'BD API'
+      method: 'GET'
+      headers: 
+      urlSuffix: 'projects/abd80c7e-d771-4627-9c04-ee346c932920/versions/392992cd-8c61-4377-a6fd-891018ff8023/risk-profile'
+      waitForCompletion: 'false'
 
 
 
